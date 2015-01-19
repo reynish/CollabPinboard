@@ -12,9 +12,22 @@ Template.pinboard.rendered = function () {
       preserveAspectRatio: 'xMinYMin meet'
     });
 
-  //function zoomed() {
-  //  container.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
-  //}
+  var saveTimeout;
+
+  function zoomed(d) {
+    d3.select(this).attr("transform", "scale(" + d3.event.scale + ")");
+    d.scale = d3.event.scale;
+    if (saveTimeout) {
+      clearTimeout(saveTimeout);
+    }
+    saveTimeout = setTimeout(function () {
+      Pins.update(d._id, {$set: {scale: d.scale}});
+    }, 25)
+  }
+
+  var zoom = d3.behavior.zoom()
+    .scaleExtent([.5, 2])
+    .on("zoom", zoomed);
 
   function dragstarted(d) {
     d3.event.sourceEvent.stopPropagation();
@@ -60,6 +73,13 @@ Template.pinboard.rendered = function () {
         y: function (d) {
           return d.y
         }
+      })
+      .select('g.pin-g')
+      .attr({
+        transform: function (d) {
+          var scale = d.scale ? d.scale : 1;
+          return 'scale(' + scale + ')';
+        }
       });
 
     pins
@@ -84,22 +104,38 @@ Template.pinboard.rendered = function () {
       })
       .call(drag)
       .append('g')
-      .attr({class: 'pin-g'})
-      .each(function(d,i){
-        if (d.type === 'text'){
+      .attr({
+        class: 'pin-g',
+        transform: function (d) {
+          var scale = d.scale ? d.scale : 1;
+          return 'scale(' + scale + ')';
+        }
+      })
+      //.attr("transform", "translate(-50%,-50%)")
+      .call(zoom)
+      .each(function (d, i) {
+        if (d.type === 'text') {
           d3.select(this).append('text')
             .text(function (d) {
               return d.data
             });
         }
-        if (d.type === 'image'){
+        if (d.type === 'image') {
           d3.select(this).append('svg:image')
             .attr({
               width: 320,
               height: 320,
-              "xlink:href": function(d){
-                var img = Images.find();
-                return false;
+              "xlink:href": function (d) {
+                var url = d.data.url();
+
+                function checkUrl() {
+                  if (url === null) {
+                    setTimeout(checkUrl, 500)
+                  }
+                }
+
+                checkUrl();
+                return d.data.url();
               }
             });
         }
@@ -116,5 +152,8 @@ Template.pinboard.rendered = function () {
     changed: drawPins,
     removed: drawPins
   });
-
+  Images.find().observe(function () {
+    debugger
+    drawPins()
+  });
 };
