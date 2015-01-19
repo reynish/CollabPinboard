@@ -1,6 +1,6 @@
 {
   "includePaths": [
-    "styles/"
+    "client/styles/"
   ],
   "enableAutoprefixer": true
 }

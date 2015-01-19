@@ -12,3 +12,5 @@ meteorhacks:npm
 
 npm-container
 http
+fourseven:scss@2.0.0-beta_1
+mquandalle:bower
