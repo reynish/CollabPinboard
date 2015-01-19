@@ -1,0 +1,31 @@
+* { box-sizing: border-box; }
+
+html,
+body {
+  @extend ._layout-fill;
+}
+
+body {
+  @extend ._layout-row;
+  @extend ._layout-halign_center;
+}
+
+.main {
+  @extend ._flex;
+  @extend ._layout-column;
+  @extend ._layout-halign_center;
+}
+
+.sidebar {
+  @extend ._layout-column;
+  @extend ._layout-halign_center;
+  $sb-width: 20%;
+  width: $sb-width;
+  padding: .5em;
+  &.sidebar_hidden {
+    margin-left: -$sb-width;
+  }
+  &.sidebar_visible {
+    margin-left: 0;
+  }
+}

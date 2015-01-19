@@ -1,0 +1,50 @@
+<head>
+  <title>Pinboard</title>
+</head>
+
+<body>
+<div class="sidebar">
+  {{> pinNew}}
+  <div class="pins">
+    {{#each pins}}
+      {{> pin}}
+    {{/each}}
+    {{#each archivedPins}}
+      {{> pin}}
+    {{/each}}
+  </div>
+</div>
+<div class="main">
+  {{> pinboard}}
+</div>
+</body>
+
+<template name="hello">
+  <button>Click Me</button>
+  <p>You've pressed the button {{counter}} times.</p>
+</template>
+
+<template name="pin">
+  <div class="pin-view">
+    <span class="pin-label">
+      {{text}}
+    </span>
+    <button class="pin-control toggleArchive">
+      {{#if archived}}
+        <i class="fa fa-toggle-off"></i>
+      {{else}}
+        <i class="fa fa-toggle-on"></i>
+      {{/if}}
+    </button>
+  </div>
+</template>
+
+<template name="pinboard">
+  <svg id="Pinboard" class="pinboard"></svg>
+</template>
+
+<template name="pinNew">
+  <form class="pin-new">
+    <input type="text" name="text" placeholder="Type to add pin"/>
+  </form>
+</template>

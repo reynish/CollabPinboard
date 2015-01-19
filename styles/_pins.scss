@@ -1,0 +1,41 @@
+.pin-new {
+  input {
+    width: 100%;
+    margin: .25em 0;
+    padding: .25em;
+    box-sizing: border-box;
+    color: #FFF;
+    background-color: hsla(0, 100%, 100%, .15);
+    border: 1px solid hsla(0,100%,100%,.5);
+  }
+}
+
+.pins {
+  @extend ._flex;
+  overflow-y: auto;
+}
+
+.pin-view {
+  @extend ._layout-row;
+  @extend ._layout-valign_center;
+  margin: .25em 0;
+  padding: .5em 0;
+  border-bottom: 1px solid hsla(0,100%,100%,.1);
+  &:nth-last-child {
+    border-bottom-width: 0;
+  }
+
+}
+
+.pin-label {
+  @extend ._flex;
+  padding-right: .25em;
+  word-break: break-all;
+}
+
+.pin-control {
+  font-size: 1em;
+  border-width: 0;
+  border-color: transparent;
+  background: transparent;
+}
