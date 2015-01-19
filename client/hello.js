@@ -11,6 +11,9 @@ Template.body.helpers({
   },
   archivedPins: function () {
     return Pins.find({archived: true});
+  },
+  images: function(){
+    return Images.find();
   }
 });
 
@@ -20,11 +23,11 @@ Template.pin.events({
   }
 });
 
-function CreatePin(type, data){
+function CreatePin(type, data) {
   this.type = type;
   this.data = data;
-  this.x = 0;
-  this.y = 0;
+  this.x = 50;
+  this.y = 50;
   this.archived = false;
 }
 
@@ -49,13 +52,19 @@ Template.pinNew.events({
     return false;
 
   },
-  'change input[type=file]': function(){
+  'change input[type=file]': function () {
     var files = event.target.files;
     for (var i = 0, ln = files.length; i < ln; i++) {
-      FS.Utility.eachFile(event, function(file) {
+      FS.Utility.eachFile(event, function (file) {
+        file.name = file.name.split(' ').join('_');
         Images.insert(file, function (err, fileObj) {
-          Pins.insert(new CreatePin('image', fileObj));
-          debugger
+          Pins.insert({
+            type: type,
+            data: fileObj,
+            x: 50,
+            y: 50,
+            archived: false
+          });
         });
       });
     }

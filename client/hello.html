@@ -22,7 +22,11 @@
 <template name="pin">
   <div class="pin-view">
     <span class="pin-label">
-      {{text}}
+      {{#if data.url}}
+        <img src="{{data.url}}" style="max-width:100%;" />
+      {{else}}
+        {{data}}
+      {{/if}}
     </span>
     <button class="pin-control toggleArchive">
       {{#if archived}}

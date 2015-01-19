@@ -93,10 +93,15 @@ Template.pinboard.rendered = function () {
             });
         }
         if (d.type === 'image'){
-          var fileRec = d.data.getFileRecord();
-          debugger;
           d3.select(this).append('svg:image')
-            .attr("xlink:href", '');
+            .attr({
+              width: 320,
+              height: 320,
+              "xlink:href": function(d){
+                var img = Images.find();
+                return false;
+              }
+            });
         }
       });
 
