@@ -19,11 +19,6 @@
 </div>
 </body>
 
-<template name="hello">
-  <button>Click Me</button>
-  <p>You've pressed the button {{counter}} times.</p>
-</template>
-
 <template name="pin">
   <div class="pin-view">
     <span class="pin-label">
@@ -39,12 +34,9 @@
   </div>
 </template>
 
-<template name="pinboard">
-  <svg id="Pinboard" class="pinboard"></svg>
-</template>
-
 <template name="pinNew">
   <form class="pin-new">
     <input type="text" name="text" placeholder="Type to add pin"/>
+    <input type="file" name="file" />
   </form>
 </template>
