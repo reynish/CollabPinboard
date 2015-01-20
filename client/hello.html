@@ -22,7 +22,15 @@
 <template name="pin">
   <div class="pin-view">
     <span class="pin-label">
+<<<<<<< HEAD
       {{data}}
+=======
+      {{#if data.url}}
+        <img src="{{data.url}}" style="max-width:100%;" />
+      {{else}}
+        {{data}}
+      {{/if}}
+>>>>>>> 1b3838c9d8814c2e4242932a71b00dac650d92e5
     </span>
       <img src="{{data.url}}" style="width: 100%; height: auto;" />
     <button class="pin-control toggleArchive">
